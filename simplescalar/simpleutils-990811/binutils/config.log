@@ -1,0 +1,87 @@
+This file contains any messages produced by compilers while
+running configure, to aid debugging if configure makes a mistake.
+
+configure:594: checking host system type
+configure:615: checking target system type
+configure:633: checking build system type
+configure:668: checking for a BSD compatible install
+configure:721: checking whether build environment is sane
+configure:778: checking whether make sets ${MAKE}
+configure:824: checking for working aclocal
+configure:837: checking for working autoconf
+configure:850: checking for working automake
+configure:863: checking for working autoheader
+configure:876: checking for working makeinfo
+configure:962: checking for ranlib
+configure:992: checking for gcc
+configure:1105: checking whether the C compiler (gcc -g -O2 -W -Wall ) works
+configure:1121: gcc -o conftest -g -O2 -W -Wall   conftest.c  1>&5
+configure:1118:1: warning: return type defaults to 'int' [-Wimplicit-int]
+ 1118 | main(){return(0);}
+      | ^~~~
+configure:1147: checking whether the C compiler (gcc -g -O2 -W -Wall ) is a cross-compiler
+configure:1152: checking whether we are using GNU C
+configure:1180: checking whether gcc accepts -g
+configure:1223: checking for ld used by GCC
+configure:1286: checking if the linker (/usr/bin/ld) is GNU ld
+configure:1302: checking for BSD-compatible nm
+configure:1340: checking command to parse /usr/bin/nm -B output
+configure:1505: checking for _ prefix in compiled symbols
+configure:1543: checking whether ln -s works
+ltconfig:586: checking for object suffix
+ltconfig:587: gcc -c -g -O2 -W -Wall  conftest.c 1>&5
+ltconfig:717: checking if gcc PIC flag -fPIC works
+ltconfig:718: gcc -c -g -O2 -W -Wall -fPIC -DPIC  conftest.c 1>&5
+ltconfig:760: checking if gcc supports -c -o file.o
+ltconfig:761: gcc -c -g -O2 -W -Wall -c -o conftest2.o  conftest.c 1>&5
+ltconfig:788: checking if gcc supports -c -o file.lo
+ltconfig:789: gcc -c -g -O2 -W -Wall -c -o conftest.lo  conftest.c 1>&5
+ltconfig:840: checking if gcc supports -fno-rtti -fno-exceptions
+ltconfig:841: gcc -c -g -O2 -W -Wall -fno-rtti -fno-exceptions -c conftest.c  conftest.c 1>&5
+ltconfig:884: checking if gcc static flag -static works
+ltconfig:885: gcc -o conftest -g -O2 -W -Wall   -static conftest.c  1>&5
+conftest.c:1:1: warning: return type defaults to 'int' [-Wimplicit-int]
+    1 | main(){return(0);}
+      | ^~~~
+GNU ld (GNU Binutils for Ubuntu) 2.34
+ltconfig:1447: checking if global_symbol_pipe works
+ltconfig:1448: gcc -c -g -O2 -W -Wall  conftest.c 1>&5
+conftest.c:9:1: warning: return type defaults to 'int' [-Wimplicit-int]
+    9 | main(){nm_test_var='a';nm_test_func();return(0);}
+      | ^~~~
+ltconfig:1451: eval "/usr/bin/nm -B conftest.o | sed -n -e 's/^.*[ 	]\([ABCDGISTW]\)[ 	][ 	]*\(\)\([_A-Za-z][_A-Za-z0-9]*\)$/  /p' > conftest.nm"
+ltconfig:1503: gcc -o conftest -g -O2 -W -Wall -fno-builtin   conftest.c conftestm.o 1>&5
+conftest.c:6:13: warning: 'main' is usually a function [-Wmain]
+    6 | extern char main;
+      |             ^~~~
+configure:1906: checking for gcc
+configure:2019: checking whether the C compiler (gcc -g -O2 -W -Wall ) works
+configure:2035: gcc -o conftest -g -O2 -W -Wall   conftest.c  1>&5
+configure:2032:1: warning: return type defaults to 'int' [-Wimplicit-int]
+ 2032 | main(){return(0);}
+      | ^~~~
+configure:2061: checking whether the C compiler (gcc -g -O2 -W -Wall ) is a cross-compiler
+configure:2066: checking whether we are using GNU C
+configure:2094: checking whether gcc accepts -g
+configure:2131: checking for bison
+configure:2131: checking for byacc
+configure:2162: checking how to run the C preprocessor
+configure:2247: checking for flex
+configure:2247: checking for lex
+configure:2280: checking for flex
+configure:2314: checking for yywrap in -ll
+configure:2333: gcc -o conftest -g -O2 -W -Wall   conftest.c -ll   1>&5
+/usr/bin/ld: cannot find -ll
+collect2: error: ld returned 1 exit status
+configure: failed program was:
+#line 2322 "configure"
+#include "confdefs.h"
+/* Override any gcc2 internal prototype to avoid an error.  */
+/* We use char because int might match the return type of a gcc2
+    builtin and then its argument prototype would still apply.  */
+char yywrap();
+
+int main() {
+yywrap()
+; return 0; }
+configure:2356: checking lex output file root

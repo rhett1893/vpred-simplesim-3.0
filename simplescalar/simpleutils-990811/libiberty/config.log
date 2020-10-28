@@ -1,0 +1,271 @@
+This file contains any messages produced by compilers while
+running configure, to aid debugging if configure makes a mistake.
+
+configure:602: checking host system type
+configure:625: checking build system type
+configure:651: checking for ar
+configure:683: checking for ranlib
+configure:760: checking for gcc
+configure:839: checking whether we are using GNU C
+configure:863: checking whether gcc accepts -g
+configure:892: checking for POSIXized ISC
+configure:930: checking for a BSD compatible install
+configure:991: checking how to run the C preprocessor
+configure:1074: checking for sys/file.h
+configure:1084: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:1074: checking for sys/param.h
+configure:1074: checking for stdlib.h
+configure:1084: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:1074: checking for string.h
+configure:1074: checking for unistd.h
+configure:1074: checking for strings.h
+configure:1084: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:1074: checking for sys/time.h
+configure:1084: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:1074: checking for sys/resource.h
+configure:1084: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:1111: checking for sys/wait.h that is POSIX.1 compatible
+configure:1132: gcc -c -g -O2 -W -Wall  conftest.c 1>&5
+configure:1738: checking whether the C compiler (gcc -g -O2 -W -Wall ) works
+configure:1754: gcc -o conftest -g -O2 -W -Wall   conftest.c  1>&5
+configure:1751:1: warning: return type defaults to 'int' [-Wimplicit-int]
+ 1751 | main(){return(0);}
+      | ^~~~
+configure:1780: checking whether the C compiler (gcc -g -O2 -W -Wall ) is a cross-compiler
+configure:1787: checking for asprintf
+configure:1815: gcc -o conftest -g -O2 -W -Wall   conftest.c  1>&5
+configure:1787: checking for atexit
+configure:1815: gcc -o conftest -g -O2 -W -Wall   conftest.c  1>&5
+configure:1787: checking for basename
+configure:1815: gcc -o conftest -g -O2 -W -Wall   conftest.c  1>&5
+configure:1787: checking for bcmp
+configure:1815: gcc -o conftest -g -O2 -W -Wall   conftest.c  1>&5
+configure:1799:6: warning: conflicting types for built-in function 'bcmp'; expected 'int(const void *, const void *, long unsigned int)' [-Wbuiltin-declaration-mismatch]
+ 1799 | char $ac_func();
+      |      ^~~~
+configure:1787: checking for bcopy
+configure:1815: gcc -o conftest -g -O2 -W -Wall   conftest.c  1>&5
+configure:1799:6: warning: conflicting types for built-in function 'bcopy'; expected 'void(const void *, void *, long unsigned int)' [-Wbuiltin-declaration-mismatch]
+ 1799 | char $ac_func();
+      |      ^~~~~
+configure:1787: checking for bzero
+configure:1815: gcc -o conftest -g -O2 -W -Wall   conftest.c  1>&5
+configure:1799:6: warning: conflicting types for built-in function 'bzero'; expected 'void(void *, long unsigned int)' [-Wbuiltin-declaration-mismatch]
+ 1799 | char $ac_func();
+      |      ^~~~~
+configure:1787: checking for calloc
+configure:1815: gcc -o conftest -g -O2 -W -Wall   conftest.c  1>&5
+configure:1799:6: warning: conflicting types for built-in function 'calloc'; expected 'void *(long unsigned int,  long unsigned int)' [-Wbuiltin-declaration-mismatch]
+ 1799 | char $ac_func();
+      |      ^~~~~~
+configure:1796:1: note: 'calloc' is declared in header '<stdlib.h>'
+ 1795 | #include <assert.h>
+  +++ |+#include <stdlib.h>
+ 1796 | /* Override any gcc2 internal prototype to avoid an error.  */
+configure:1787: checking for clock
+configure:1815: gcc -o conftest -g -O2 -W -Wall   conftest.c  1>&5
+configure:1787: checking for getcwd
+configure:1787: checking for getpagesize
+configure:1787: checking for index
+configure:1815: gcc -o conftest -g -O2 -W -Wall   conftest.c  1>&5
+configure:1799:6: warning: conflicting types for built-in function 'index'; expected 'char *(const char *, int)' [-Wbuiltin-declaration-mismatch]
+ 1799 | char $ac_func();
+      |      ^~~~~
+configure:1787: checking for insque
+configure:1815: gcc -o conftest -g -O2 -W -Wall   conftest.c  1>&5
+configure:1787: checking for memchr
+configure:1815: gcc -o conftest -g -O2 -W -Wall   conftest.c  1>&5
+configure:1799:6: warning: conflicting types for built-in function 'memchr'; expected 'void *(const void *, int,  long unsigned int)' [-Wbuiltin-declaration-mismatch]
+ 1799 | char $ac_func();
+      |      ^~~~~~
+configure:1796:1: note: 'memchr' is declared in header '<string.h>'
+ 1795 | #include <assert.h>
+  +++ |+#include <string.h>
+ 1796 | /* Override any gcc2 internal prototype to avoid an error.  */
+configure:1787: checking for memcmp
+configure:1815: gcc -o conftest -g -O2 -W -Wall   conftest.c  1>&5
+configure:1799:6: warning: conflicting types for built-in function 'memcmp'; expected 'int(const void *, const void *, long unsigned int)' [-Wbuiltin-declaration-mismatch]
+ 1799 | char $ac_func();
+      |      ^~~~~~
+configure:1796:1: note: 'memcmp' is declared in header '<string.h>'
+ 1795 | #include <assert.h>
+  +++ |+#include <string.h>
+ 1796 | /* Override any gcc2 internal prototype to avoid an error.  */
+configure:1787: checking for memcpy
+configure:1815: gcc -o conftest -g -O2 -W -Wall   conftest.c  1>&5
+configure:1799:6: warning: conflicting types for built-in function 'memcpy'; expected 'void *(void *, const void *, long unsigned int)' [-Wbuiltin-declaration-mismatch]
+ 1799 | char $ac_func();
+      |      ^~~~~~
+configure:1796:1: note: 'memcpy' is declared in header '<string.h>'
+ 1795 | #include <assert.h>
+  +++ |+#include <string.h>
+ 1796 | /* Override any gcc2 internal prototype to avoid an error.  */
+configure:1787: checking for memmove
+configure:1815: gcc -o conftest -g -O2 -W -Wall   conftest.c  1>&5
+configure:1799:6: warning: conflicting types for built-in function 'memmove'; expected 'void *(void *, const void *, long unsigned int)' [-Wbuiltin-declaration-mismatch]
+ 1799 | char $ac_func();
+      |      ^~~~~~~
+configure:1796:1: note: 'memmove' is declared in header '<string.h>'
+ 1795 | #include <assert.h>
+  +++ |+#include <string.h>
+ 1796 | /* Override any gcc2 internal prototype to avoid an error.  */
+configure:1787: checking for memset
+configure:1815: gcc -o conftest -g -O2 -W -Wall   conftest.c  1>&5
+configure:1799:6: warning: conflicting types for built-in function 'memset'; expected 'void *(void *, int,  long unsigned int)' [-Wbuiltin-declaration-mismatch]
+ 1799 | char $ac_func();
+      |      ^~~~~~
+configure:1796:1: note: 'memset' is declared in header '<string.h>'
+ 1795 | #include <assert.h>
+  +++ |+#include <string.h>
+ 1796 | /* Override any gcc2 internal prototype to avoid an error.  */
+configure:1787: checking for mkstemps
+configure:1815: gcc -o conftest -g -O2 -W -Wall   conftest.c  1>&5
+configure:1787: checking for random
+configure:1815: gcc -o conftest -g -O2 -W -Wall   conftest.c  1>&5
+configure:1787: checking for rename
+configure:1815: gcc -o conftest -g -O2 -W -Wall   conftest.c  1>&5
+configure:1787: checking for rindex
+configure:1815: gcc -o conftest -g -O2 -W -Wall   conftest.c  1>&5
+configure:1799:6: warning: conflicting types for built-in function 'rindex'; expected 'char *(const char *, int)' [-Wbuiltin-declaration-mismatch]
+ 1799 | char $ac_func();
+      |      ^~~~~~
+configure:1787: checking for sigsetmask
+configure:1815: gcc -o conftest -g -O2 -W -Wall   conftest.c  1>&5
+configure:1787: checking for strcasecmp
+configure:1787: checking for strchr
+configure:1787: checking for strdup
+configure:1815: gcc -o conftest -g -O2 -W -Wall   conftest.c  1>&5
+configure:1799:6: warning: conflicting types for built-in function 'strdup'; expected 'char *(const char *)' [-Wbuiltin-declaration-mismatch]
+ 1799 | char $ac_func();
+      |      ^~~~~~
+configure:1787: checking for strncasecmp
+configure:1815: gcc -o conftest -g -O2 -W -Wall   conftest.c  1>&5
+configure:1799:6: warning: conflicting types for built-in function 'strncasecmp'; expected 'int(const char *, const char *, long unsigned int)' [-Wbuiltin-declaration-mismatch]
+ 1799 | char $ac_func();
+      |      ^~~~~~~~~~~
+configure:1787: checking for strrchr
+configure:1815: gcc -o conftest -g -O2 -W -Wall   conftest.c  1>&5
+configure:1799:6: warning: conflicting types for built-in function 'strrchr'; expected 'char *(const char *, int)' [-Wbuiltin-declaration-mismatch]
+ 1799 | char $ac_func();
+      |      ^~~~~~~
+configure:1796:1: note: 'strrchr' is declared in header '<string.h>'
+ 1795 | #include <assert.h>
+  +++ |+#include <string.h>
+ 1796 | /* Override any gcc2 internal prototype to avoid an error.  */
+configure:1787: checking for strstr
+configure:1815: gcc -o conftest -g -O2 -W -Wall   conftest.c  1>&5
+configure:1799:6: warning: conflicting types for built-in function 'strstr'; expected 'char *(const char *, const char *)' [-Wbuiltin-declaration-mismatch]
+ 1799 | char $ac_func();
+      |      ^~~~~~
+configure:1796:1: note: 'strstr' is declared in header '<string.h>'
+ 1795 | #include <assert.h>
+  +++ |+#include <string.h>
+ 1796 | /* Override any gcc2 internal prototype to avoid an error.  */
+configure:1787: checking for strtod
+configure:1815: gcc -o conftest -g -O2 -W -Wall   conftest.c  1>&5
+configure:1787: checking for strtol
+configure:1815: gcc -o conftest -g -O2 -W -Wall   conftest.c  1>&5
+configure:1787: checking for strtoul
+configure:1815: gcc -o conftest -g -O2 -W -Wall   conftest.c  1>&5
+configure:1787: checking for tmpnam
+configure:1815: gcc -o conftest -g -O2 -W -Wall   conftest.c  1>&5
+/usr/bin/ld: /tmp/cc081dny.o: in function `main':
+/home/rhett/simplescalar/simpleutils-990811/libiberty/configure:1809: warning: the use of `tmpnam' is dangerous, better use `mkstemp'
+configure:1787: checking for vasprintf
+configure:1815: gcc -o conftest -g -O2 -W -Wall   conftest.c  1>&5
+configure:1787: checking for vfprintf
+configure:1815: gcc -o conftest -g -O2 -W -Wall   conftest.c  1>&5
+configure:1799:6: warning: conflicting types for built-in function 'vfprintf'; expected 'int(void *, const char *, __va_list_tag *)' [-Wbuiltin-declaration-mismatch]
+ 1799 | char $ac_func();
+      |      ^~~~~~~~
+configure:1796:1: note: 'vfprintf' is declared in header '<stdio.h>'
+ 1795 | #include <assert.h>
+  +++ |+#include <stdio.h>
+ 1796 | /* Override any gcc2 internal prototype to avoid an error.  */
+configure:1787: checking for vprintf
+configure:1815: gcc -o conftest -g -O2 -W -Wall   conftest.c  1>&5
+configure:1799:6: warning: conflicting types for built-in function 'vprintf'; expected 'int(const char *, __va_list_tag *)' [-Wbuiltin-declaration-mismatch]
+ 1799 | char $ac_func();
+      |      ^~~~~~~
+configure:1796:1: note: 'vprintf' is declared in header '<stdio.h>'
+ 1795 | #include <assert.h>
+  +++ |+#include <stdio.h>
+ 1796 | /* Override any gcc2 internal prototype to avoid an error.  */
+configure:1787: checking for vsprintf
+configure:1815: gcc -o conftest -g -O2 -W -Wall   conftest.c  1>&5
+configure:1799:6: warning: conflicting types for built-in function 'vsprintf'; expected 'int(char *, const char *, __va_list_tag *)' [-Wbuiltin-declaration-mismatch]
+ 1799 | char $ac_func();
+      |      ^~~~~~~~
+configure:1796:1: note: 'vsprintf' is declared in header '<stdio.h>'
+ 1795 | #include <assert.h>
+  +++ |+#include <stdio.h>
+ 1796 | /* Override any gcc2 internal prototype to avoid an error.  */
+configure:1787: checking for waitpid
+configure:1815: gcc -o conftest -g -O2 -W -Wall   conftest.c  1>&5
+configure:1844: checking for working alloca.h
+configure:1877: checking for alloca
+configure:2076: checking for ANSI C header files
+configure:2180: checking for pid_t
+configure:2214: checking for vfork.h
+configure:2224: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:2220:10: fatal error: vfork.h: No such file or directory
+ 2220 | #include <vfork.h>
+      |          ^~~~~~~~~
+compilation terminated.
+configure: failed program was:
+#line 2219 "configure"
+#include "confdefs.h"
+#include <vfork.h>
+configure:2249: checking for working vfork
+configure:2400: gcc -o conftest -g -O2 -W -Wall   conftest.c  1>&5
+configure:2326:1: warning: return type defaults to 'int' [-Wimplicit-int]
+ 2326 | sparc_address_test (arg) int arg;
+      | ^~~~~~~~~~~~~~~~~~
+configure:2343:1: warning: return type defaults to 'int' [-Wimplicit-int]
+ 2343 | main() {
+      | ^~~~
+configure: In function 'main':
+configure:2381:12: warning: implicit declaration of function 'wait' [-Wimplicit-function-declaration]
+ 2381 |     while (wait(&status) != child)
+      |            ^~~~
+configure:2383:5: warning: implicit declaration of function 'exit' [-Wimplicit-function-declaration]
+ 2383 |     exit(
+      |     ^~~~
+configure:2383:5: warning: incompatible implicit declaration of built-in function 'exit'
+configure:2312:1: note: include '<stdlib.h>' or provide a declaration of 'exit'
+ 2311 | #include <unistd.h>
+  +++ |+#include <stdlib.h>
+ 2312 | #endif
+configure: In function 'sparc_address_test':
+configure:2338:7: warning: ignoring return value of 'write', declared with attribute warn_unused_result [-Wunused-result]
+ 2338 |       write(-1, "", 0);
+      |       ^~~~~~~~~~~~~~~~
+configure:2342:1: warning: control reaches end of non-void function [-Wreturn-type]
+ 2342 | }
+      | ^
+configure:2427: checking for sys_errlist
+configure:2439: gcc -o conftest -g -O2 -W -Wall   conftest.c  1>&5
+/usr/bin/ld: /tmp/ccLwml35.o: in function `main':
+/home/rhett/simplescalar/simpleutils-990811/libiberty/configure:2435: warning: `sys_errlist' is deprecated; use `strerror' or `strerror_r' instead
+configure:2427: checking for sys_nerr
+configure:2439: gcc -o conftest -g -O2 -W -Wall   conftest.c  1>&5
+/usr/bin/ld: /tmp/ccaHPDDl.o: in function `main':
+/home/rhett/simplescalar/simpleutils-990811/libiberty/configure:2435: warning: `sys_nerr' is deprecated; use `strerror' or `strerror_r' instead
+configure:2427: checking for sys_siglist
+configure:2439: gcc -o conftest -g -O2 -W -Wall   conftest.c  1>&5
+configure:2465: checking for getrusage
+configure:2493: gcc -o conftest -g -O2 -W -Wall   conftest.c  1>&5
+configure:2465: checking for on_exit
+configure:2493: gcc -o conftest -g -O2 -W -Wall   conftest.c  1>&5
+configure:2465: checking for psignal
+configure:2493: gcc -o conftest -g -O2 -W -Wall   conftest.c  1>&5
+configure:2465: checking for strerror
+configure:2493: gcc -o conftest -g -O2 -W -Wall   conftest.c  1>&5
+configure:2465: checking for strsignal
+configure:2493: gcc -o conftest -g -O2 -W -Wall   conftest.c  1>&5
+configure:2465: checking for sysconf
+configure:2493: gcc -o conftest -g -O2 -W -Wall   conftest.c  1>&5
+configure:2465: checking for times
+configure:2493: gcc -o conftest -g -O2 -W -Wall   conftest.c  1>&5
+configure:2465: checking for sbrk
+configure:2493: gcc -o conftest -g -O2 -W -Wall   conftest.c  1>&5
