@@ -74,6 +74,7 @@
 #include "stats.h"
 #include "loader.h"
 #include "sim.h"
+#include "vp.h"
 
 /* stats signal handler */
 static void
