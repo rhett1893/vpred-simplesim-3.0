@@ -81,7 +81,10 @@ static struct mem_t *mem = NULL;
 
 /* track number of refs */
 static counter_t sim_num_refs = 0;
-
+static counter_t num_of_vpred_misses = 0;
+static counter_t num_of_vpred_hits = 0;
+extern counter_t predicted_ok;
+extern counter_t Wrong_Predictions;
 /* maximum number of inst's to execute */
 static unsigned int max_insts;
 md_inst_t inst;
@@ -89,7 +92,6 @@ VAL_TAG_TYPE pred_val_main;
 extern int common_ref;
 extern int misses_vpred;
 int use_vp=1;
-extern int predicted_ok;
 extern int lookup_accessed;
 extern int update_accessed;
 extern int allocate_accessed;
@@ -126,7 +128,7 @@ sim_check_options(struct opt_odb_t *odb, int argc, char **argv)
 /* register simulator-specific statistics */
 void
 sim_reg_stats(struct stat_sdb_t *sdb)
-{
+{ 
   stat_reg_counter(sdb, "sim_num_insn",
 		   "total number of instructions executed",
 		   &sim_num_insn, sim_num_insn, NULL);
@@ -142,16 +144,15 @@ sim_reg_stats(struct stat_sdb_t *sdb)
   stat_reg_int(sdb, "Correct_Prediction",
          "total correct predictions made",
          &predicted_ok, 0, NULL);
-  stat_reg_int(sdb, "lookup_accessed",
-         "lookup_accessed",
-         &lookup_accessed, 0, NULL);
-  stat_reg_int(sdb, "update_accessed",
-         "update_accessed",
-         &update_accessed, 0, NULL);
-  stat_reg_int(sdb, "allocate_accessed",
-         "allocate_accessed",
-         &allocate_accessed, 0, NULL);
-
+  stat_reg_int(sdb, "num_of_vpred_hits",
+         "num_of_vpred_hits",
+         &num_of_vpred_hits, 0, NULL);
+  stat_reg_int(sdb, "num_of_vpred_misses",
+         "num_of_vpred_misses",
+         &num_of_vpred_misses, 0, NULL);
+  stat_reg_int(sdb, "Wrong_Predictions",
+       "Wrong_Predictions made by Value prediction",
+         &Wrong_Predictions, 0, NULL);
   ld_reg_stats(sdb);
   mem_reg_stats(mem, sdb);
 }
@@ -261,18 +262,14 @@ sim_uninit(void)
 
 /* precise architected memory state accessor macros */
 #define READ_BYTE(SRC, FAULT)						\
-  ((FAULT) = md_fault_none, addr = (SRC), \
-    lookup(addr,inst,&pred_val_main,mem), MEM_READ_BYTE(mem, addr))
+  ((FAULT) = md_fault_none, addr = (SRC), MEM_READ_BYTE(mem, addr))
 #define READ_HALF(SRC, FAULT)						\
-  ((FAULT) = md_fault_none, addr = (SRC), \
-    lookup(addr,inst,&pred_val_main,mem), MEM_READ_HALF(mem, addr))
+  ((FAULT) = md_fault_none, addr = (SRC), MEM_READ_HALF(mem, addr))
 #define READ_WORD(SRC, FAULT)						\
-  ((FAULT) = md_fault_none, addr = (SRC), \
-    lookup(addr,inst,&pred_val_main,mem), MEM_READ_WORD(mem, addr))
+  ((FAULT) = md_fault_none, addr = (SRC), MEM_READ_WORD(mem, addr))
 #ifdef HOST_HAS_QWORD
 #define READ_QWORD(SRC, FAULT)						\
-  ((FAULT) = md_fault_none, addr = (SRC), \
-    lookup(addr,inst,&pred_val_main,mem), MEM_READ_QWORD(mem, addr))
+  ((FAULT) = md_fault_none, addr = (SRC), MEM_READ_QWORD(mem, addr))
 #endif /* HOST_HAS_QWORD */
 
 #define WRITE_BYTE(SRC, DST, FAULT)					\
@@ -370,7 +367,26 @@ sim_main(void)
 	  if (MD_OP_FLAGS(op) & F_STORE)
 	    is_write = TRUE;
 	}
-
+  if(is_PRED)
+  {
+    int data;
+    int found;
+    VAL_TAG_TYPE calc_val;
+    mem_access(mem,Read,addr,&data,sizeof(word_t));
+    calc_val.value.single_p = data;
+    calc_val.fsm_pred = MISS;
+    lookup(addr,inst,&pred_val_main,mem);
+    found = update(addr,inst,pred_val_main,calc_val,common_ref++);
+    if(found == MISS)
+    {
+      allocate(addr,inst,calc_val,common_ref++);
+      num_of_vpred_misses++;
+    }
+    else
+    {
+      num_of_vpred_hits++;
+    }
+  }
       /* check for DLite debugger entry condition */
       if (dlite_check_break(regs.regs_NPC,
 			    is_write ? ACCESS_WRITE : ACCESS_READ,

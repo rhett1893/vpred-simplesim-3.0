@@ -21,6 +21,9 @@
 /* pc stride (in bits) */
 #define INST_OFFSET	0
 
+#define is_PRED   ( ((MD_OP_FLAGS(op) & F_ICOMP) ||   \
+                         (MD_OP_FLAGS(op) & F_LOAD))  &&  \
+                         !(MD_OP_FLAGS(op) & F_LONGLAT) )
 /* Single precision table entry definition */
 typedef struct ln_i1{
   unsigned long	pc;     /* entry PC (tag) */
@@ -81,7 +84,6 @@ extern int                       hash_no_i1;
 extern int                       hash_no_i2;
 extern int                       hash_asso_i1;
 extern int                       hash_asso_i2;
-extern int                       predicted_ok;
 
 
 /* function headers : */

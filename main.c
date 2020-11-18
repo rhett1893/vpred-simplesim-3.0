@@ -92,7 +92,6 @@ signal_exit_now(int sigtype)
 
 /* execution instruction counter */
 counter_t sim_num_insn = 0;
-
 #if 0 /* not portable... :-( */
 /* total simulator (data) memory usage */
 unsigned int sim_mem_usage = 0;

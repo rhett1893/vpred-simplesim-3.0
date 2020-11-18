@@ -33,7 +33,8 @@ int                       hash_asso_i1;     /* Single precision set
 					       associativity */
 int                       hash_asso_i2;     /* Double precision set 
 					       associativity */
-int predicted_ok=0;     /* total number of correct predictions */
+counter_t predicted_ok=0;     /* total number of correct predictions */
+counter_t Wrong_Predictions=0;     /* total number of correct predictions */
 int lookup_accessed=0;
 int update_accessed=0;
 int allocate_accessed=0;
@@ -118,8 +119,10 @@ int update(
 	 }
          else{ /* hit fault: found, but wrong prediction was given */
 	   /* update the classification fsm state */
+	 	Wrong_Predictions++;
 	    if(hash_table_i1[index][i].ps>0)  
 	      hash_table_i1[index][i].ps--;
+
 	    
 	 }
 
@@ -447,7 +450,7 @@ struct mem_t *mem  /* The memory block to be accessed for reading the value */ )
   unsigned int index; /* VP table index*/
   unsigned int pc;    /* instruction shifted address */
   int val[2];
-  int data;
+  
   register i;
   char X;             /* X (lookup stride) mechanisim value */
   // char flag[2];      
@@ -455,15 +458,13 @@ struct mem_t *mem  /* The memory block to be accessed for reading the value */ )
   enum md_opcode op;  /* decoded opcode enum */
 
   pred_val->fsm_pred=MISS;  
-  VAL_TAG_TYPE calc_val;
+  
   /* using Value Prediction ? */
   if(use_vp==0)
      return;
   pc = (unsigned int)(pred_PC>>INST_OFFSET); /* shifting the instruction
                                                 address */ 
-   mem_access(mem,Read,pred_PC,&data,sizeof(word_t));
-   calc_val.value.single_p = data;
-   calc_val.fsm_pred = MISS;
+   
   // flag[0]=0;  clear flags 
   // flag[1]=0; 
   MD_SET_OPCODE(op, inst); /* recover op code from inst */
@@ -479,7 +480,6 @@ struct mem_t *mem  /* The memory block to be accessed for reading the value */ )
 	 }			
      if(!found)                   /*miss*/
 	{  pred_val->fsm_pred=MISS;
-      allocate(pred_PC,inst,calc_val,common_ref++);
   }
      else{                        
        	X=hash_table_i1[index][i].x; /* set  the current lookup X value */
@@ -491,7 +491,7 @@ struct mem_t *mem  /* The memory block to be accessed for reading the value */ )
 	   fsm_pred == 1 => go with prediction
 	   fsm_pred == 0 => don't use prediction */
         pred_val->fsm_pred=(use_fsm?hash_table_i1[index][i].ps>>1:HIT); 
-        update(pred_PC,inst,*pred_val,calc_val,common_ref++);
+        //update(pred_PC,inst,*pred_val,calc_val,common_ref++);
      }
   //}
   // else{
