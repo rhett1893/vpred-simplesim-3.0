@@ -4,20 +4,20 @@
 
 /* SimpleScalar(TM) Tool Suite
  * Copyright (C) 1994-2003 by Todd M. Austin, Ph.D. and SimpleScalar, LLC.
- * All Rights Reserved.
- *
+ * All Rights Reserved. 
+ * 
  * THIS IS A LEGAL DOCUMENT, BY USING SIMPLESCALAR,
  * YOU ARE AGREEING TO THESE TERMS AND CONDITIONS.
- *
+ * 
  * No portion of this work may be used by any commercial entity, or for any
  * commercial purpose, without the prior, written permission of SimpleScalar,
  * LLC (info@simplescalar.com). Nonprofit and noncommercial use is permitted
  * as described below.
- *
+ * 
  * 1. SimpleScalar is provided AS IS, with no warranty of any kind, express
  * or implied. The user of the program accepts full responsibility for the
  * application of the program and the use of any results.
- *
+ * 
  * 2. Nonprofit and noncommercial use is encouraged. SimpleScalar may be
  * downloaded, compiled, executed, copied, and modified solely for nonprofit,
  * educational, noncommercial research, and noncommercial scholarship
@@ -26,13 +26,13 @@
  * solely for nonprofit, educational, noncommercial research, and
  * noncommercial scholarship purposes provided that this notice in its
  * entirety accompanies all copies.
- *
+ * 
  * 3. ALL COMMERCIAL USE, AND ALL USE BY FOR PROFIT ENTITIES, IS EXPRESSLY
  * PROHIBITED WITHOUT A LICENSE FROM SIMPLESCALAR, LLC (info@simplescalar.com).
- *
+ * 
  * 4. No nonprofit user may place any restrictions on the use of this software,
  * including as modified by the user, by any other authorized user.
- *
+ * 
  * 5. Noncommercial and nonprofit users may distribute copies of SimpleScalar
  * in compiled or executable form as set forth in Section 2, provided that
  * either: (A) it is accompanied by the corresponding machine-readable source
@@ -42,11 +42,11 @@
  * must permit verbatim duplication by anyone, or (C) it is distributed by
  * someone who received only the executable form, and is accompanied by a
  * copy of the written offer of source code.
- *
+ * 
  * 6. SimpleScalar was developed by Todd M. Austin, Ph.D. The tool suite is
  * currently maintained by SimpleScalar LLC (info@simplescalar.com). US Mail:
  * 2395 Timbercrest Court, Ann Arbor, MI 48105.
- *
+ * 
  * Copyright (C) 1994-2003 by Todd M. Austin, Ph.D. and SimpleScalar, LLC.
  */
 
@@ -796,7 +796,7 @@ DEFINST(PAL_WRUNIQ,		0x9f,
 	"call_pal wruniq",	"",
 	NA,			F_TRAP,
 	DUNIQ, DNA,		DGPR(/* a0 */16), DNA, DNA)
-
+	
 
 CONNECT(INTA)
 
@@ -864,7 +864,7 @@ DEFINST(ADDLI,			0x01,
 	"addl",			"a,i,c",
 	IntALU,			F_ICOMP|F_IMM,
 	DGPR(RC), DNA,		DGPR(RA), DNA, DNA)
-
+	
 
 CONNECT(S4ADDL_LINK)
 
@@ -885,7 +885,7 @@ DEFINST(S4ADDLI,		0x01,
 	"s4addl",		"a,i,c",
 	IntALU,			F_ICOMP|F_IMM,
 	DGPR(RC), DNA,		DGPR(RA), DNA, DNA)
-
+	
 
 CONNECT(SUBL_LINK)
 
@@ -986,7 +986,7 @@ DEFINST(S8ADDL,			0x00,
 	"s8addl",		"a,b,c",
 	IntALU,			F_ICOMP,
 	DGPR(RC), DNA,		DGPR(RA), DGPR(RB), DNA)
-
+	
 #define S8ADDLI_IMPL							\
   {									\
     SET_GPR(RC, SEXT32(((GPR(RA) << 3) + IMM) & ULL(0xffffffff)));	\
@@ -995,7 +995,7 @@ DEFINST(S8ADDLI,		0x01,
 	"s8addl",		"a,i,c",
 	IntALU,			F_ICOMP|F_IMM,
 	DGPR(RC), DNA,		DGPR(RA), DNA, DNA)
-
+	
 
 CONNECT(S8SUBL_LINK)
 
@@ -1007,7 +1007,7 @@ DEFINST(S8SUBL,			0x00,
 	"s8subl",		"a,b,c",
 	IntALU,			F_ICOMP,
 	DGPR(RC), DNA,		DGPR(RA), DGPR(RB), DNA)
-
+	
 #define S8SUBLI_IMPL							\
   {									\
     SET_GPR(RC, SEXT32(((GPR(RA) << 3) - IMM) & ULL(0xffffffff)));	\
@@ -1049,7 +1049,7 @@ DEFINST(ADDQ,			0x00,
 	"addq",			"a,b,c",
 	IntALU,			F_ICOMP,
 	DGPR(RC), DNA,		DGPR(RA), DGPR(RB), DNA)
-
+	
 #define ADDQI_IMPL							\
   {									\
     SET_GPR(RC, GPR(RA) + IMM);						\
@@ -1374,7 +1374,7 @@ DEFLINK(CMOVLE_LINK, 0x64, "cmovle_link", 12, 1)
 DEFLINK(CMOVGT_LINK, 0x66, "cmovgt_link", 12, 1)
 
 /* added 02/27/99, plakal@cecil, from Alpha Arch Handbook (Rev.4, EV6) */
-
+ 
 /* major implementation version of processor, used for code-scheduling
  decisions, rather than ISA decisions. Makes sense to return EV6 -- for
  sim-outorder */
@@ -1657,7 +1657,7 @@ CONNECT(AMASK_LINK)
 
 /* AMASK queries support for ISA extensions, currently we support:
 	BWX (clear bit 0)
-	FIX (clear bit 1)
+	FIX (clear bit 1) 
 	CIX (clear bit 2)
 	MVI (clear bit 8)
 */
@@ -3006,7 +3006,7 @@ DEFINST(MB,			0x40, /* -- Changed from 0x04 */
 	DNA, DNA,		DNA, DNA, DNA)
 
 /* added 02/27/99, plakal@cecil, from Alpha Arch Handbook (Rev.4, EV6) */
-
+ 
 #define WMB_IMPL							\
   {									\
     /* FIXME: not supported... */					\
@@ -3052,7 +3052,7 @@ DEFINST(RPCC,			0xc0, /* -- Changed from 0x0c */
   {									\
     /* FIXME: not supported */						\
   }
-DEFINST(_RC,			0xe0,
+DEFINST(_RC,			0xe0,  
 	"rc",		        "a",
 	NA,			NA,
 	DNA, DNA,		DNA, DNA, DNA)
@@ -3145,7 +3145,7 @@ DEFLINK(SEXTB_LINK, 0x00, "sextb_link", 12, 1)
 DEFLINK(SEXTW_LINK, 0x01, "sextw_link", 12, 1)
 
 /* added 02/27/99, plakal@cecil, from Alpha Arch Handbook (Rev.4, EV6) */
-
+ 
 /* CIX extensions */
 
 /* FIXME: could write a faster version of 1-bit-counting:
@@ -3162,7 +3162,7 @@ DEFLINK(SEXTW_LINK, 0x01, "sextw_link", 12, 1)
 									\
     SET_GPR(RC, (qword_t)_temp);					\
   }
-DEFINST(CTPOP,			0x30,
+DEFINST(CTPOP,			0x30,  
 	"ctpop",		"b,c",
 	IntALU,			F_ICOMP,
 	DGPR(RC), DNA,		DGPR(RB), DNA, DNA)
@@ -3214,7 +3214,7 @@ DEFINST(PERR,			0x31,
 									\
     SET_GPR(RC, (qword_t)_temp);					\
   }
-DEFINST(CTLZ,			0x32,
+DEFINST(CTLZ,			0x32,  
 	"ctlz",		        "b,c",
 	IntALU,			F_ICOMP,
 	DGPR(RC), DNA,		DGPR(RB), DNA, DNA)
@@ -3235,7 +3235,7 @@ DEFINST(CTLZ,			0x32,
 									\
     SET_GPR(RC, (qword_t)_temp);					\
   }
-DEFINST(CTTZ,			0x33,
+DEFINST(CTTZ,			0x33,  
 	"cttz",		        "b,c",
 	IntALU,			F_ICOMP,
 	DGPR(RC), DNA,		DGPR(RB), DNA, DNA)

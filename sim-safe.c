@@ -2,20 +2,20 @@
 
 /* SimpleScalar(TM) Tool Suite
  * Copyright (C) 1994-2003 by Todd M. Austin, Ph.D. and SimpleScalar, LLC.
- * All Rights Reserved.
- *
+ * All Rights Reserved. 
+ * 
  * THIS IS A LEGAL DOCUMENT, BY USING SIMPLESCALAR,
  * YOU ARE AGREEING TO THESE TERMS AND CONDITIONS.
- *
+ * 
  * No portion of this work may be used by any commercial entity, or for any
  * commercial purpose, without the prior, written permission of SimpleScalar,
  * LLC (info@simplescalar.com). Nonprofit and noncommercial use is permitted
  * as described below.
- *
+ * 
  * 1. SimpleScalar is provided AS IS, with no warranty of any kind, express
  * or implied. The user of the program accepts full responsibility for the
  * application of the program and the use of any results.
- *
+ * 
  * 2. Nonprofit and noncommercial use is encouraged. SimpleScalar may be
  * downloaded, compiled, executed, copied, and modified solely for nonprofit,
  * educational, noncommercial research, and noncommercial scholarship
@@ -24,13 +24,13 @@
  * solely for nonprofit, educational, noncommercial research, and
  * noncommercial scholarship purposes provided that this notice in its
  * entirety accompanies all copies.
- *
+ * 
  * 3. ALL COMMERCIAL USE, AND ALL USE BY FOR PROFIT ENTITIES, IS EXPRESSLY
  * PROHIBITED WITHOUT A LICENSE FROM SIMPLESCALAR, LLC (info@simplescalar.com).
- *
+ * 
  * 4. No nonprofit user may place any restrictions on the use of this software,
  * including as modified by the user, by any other authorized user.
- *
+ * 
  * 5. Noncommercial and nonprofit users may distribute copies of SimpleScalar
  * in compiled or executable form as set forth in Section 2, provided that
  * either: (A) it is accompanied by the corresponding machine-readable source
@@ -40,11 +40,11 @@
  * must permit verbatim duplication by anyone, or (C) it is distributed by
  * someone who received only the executable form, and is accompanied by a
  * copy of the written offer of source code.
- *
+ * 
  * 6. SimpleScalar was developed by Todd M. Austin, Ph.D. The tool suite is
  * currently maintained by SimpleScalar LLC (info@simplescalar.com). US Mail:
  * 2395 Timbercrest Court, Ann Arbor, MI 48105.
- *
+ * 
  * Copyright (C) 1994-2003 by Todd M. Austin, Ph.D. and SimpleScalar, LLC.
  */
 
@@ -64,6 +64,7 @@
 #include "options.h"
 #include "stats.h"
 #include "sim.h"
+#include "vp.h"
 
 /*
  * This file implements a functional simulator.  This functional simulator is
@@ -80,16 +81,26 @@ static struct mem_t *mem = NULL;
 
 /* track number of refs */
 static counter_t sim_num_refs = 0;
-
+static counter_t num_of_vpred_misses = 0;
+static counter_t num_of_vpred_hits = 0;
+extern counter_t predicted_ok;
+extern counter_t Wrong_Predictions;
 /* maximum number of inst's to execute */
 static unsigned int max_insts;
-
-
+md_inst_t inst;
+VAL_TAG_TYPE pred_val_main;
+extern int common_ref;
+extern int misses_vpred;
+int use_vp=1;
+extern int lookup_accessed;
+extern int update_accessed;
+extern int allocate_accessed;
+extern int found_value;
 /* register simulator-specific options */
 void
 sim_reg_options(struct opt_odb_t *odb)
 {
-  opt_reg_header(odb,
+  opt_reg_header(odb, 
 "sim-safe: This simulator implements a functional simulator.  This\n"
 "functional simulator is the simplest, most user-friendly simulator in the\n"
 "simplescalar tool set.  Unlike sim-fast, this functional simulator checks\n"
@@ -101,6 +112,9 @@ sim_reg_options(struct opt_odb_t *odb)
   opt_reg_uint(odb, "-max:inst", "maximum number of inst's to execute",
 	       &max_insts, /* default */0,
 	       /* print */TRUE, /* format */NULL);
+  opt_reg_uint(odb, "-vp", "Enable Value prediction",
+         &use_vp, /* default */0,
+         /* print */TRUE, /* format */NULL);
 
 }
 
@@ -114,7 +128,7 @@ sim_check_options(struct opt_odb_t *odb, int argc, char **argv)
 /* register simulator-specific statistics */
 void
 sim_reg_stats(struct stat_sdb_t *sdb)
-{
+{ 
   stat_reg_counter(sdb, "sim_num_insn",
 		   "total number of instructions executed",
 		   &sim_num_insn, sim_num_insn, NULL);
@@ -127,7 +141,18 @@ sim_reg_stats(struct stat_sdb_t *sdb)
   stat_reg_formula(sdb, "sim_inst_rate",
 		   "simulation speed (in insts/sec)",
 		   "sim_num_insn / sim_elapsed_time", NULL);
-
+  stat_reg_int(sdb, "Correct_Prediction",
+         "total correct predictions made",
+         &predicted_ok, 0, NULL);
+  stat_reg_int(sdb, "num_of_vpred_hits",
+         "num_of_vpred_hits",
+         &num_of_vpred_hits, 0, NULL);
+  stat_reg_int(sdb, "num_of_vpred_misses",
+         "num_of_vpred_misses",
+         &num_of_vpred_misses, 0, NULL);
+  stat_reg_int(sdb, "Wrong_Predictions",
+       "Wrong_Predictions made by Value prediction",
+         &Wrong_Predictions, 0, NULL);
   ld_reg_stats(sdb);
   mem_reg_stats(mem, sdb);
 }
@@ -265,18 +290,18 @@ sim_uninit(void)
 void
 sim_main(void)
 {
-  md_inst_t inst;
+  use_vp = 1;
   register md_addr_t addr;
   enum md_opcode op;
   register int is_write;
   enum md_fault_type fault;
-
+  create_stride();
   fprintf(stderr, "sim: ** starting functional simulation **\n");
 
   /* set up initial default next PC */
   regs.regs_NPC = regs.regs_PC + sizeof(md_inst_t);
 
-  /* check for DLite debugger entry condition */
+  /* check for DLite debugger enhash_no_i1try condition */
   if (dlite_check_break(regs.regs_PC, /* !access */0, /* addr */0, 0, 0))
     dlite_main(regs.regs_PC - sizeof(md_inst_t),
 	       regs.regs_PC, sim_num_insn, &regs, mem);
@@ -342,7 +367,26 @@ sim_main(void)
 	  if (MD_OP_FLAGS(op) & F_STORE)
 	    is_write = TRUE;
 	}
-
+  if(is_PRED)
+  {
+    int data;
+    int found;
+    VAL_TAG_TYPE calc_val;
+    mem_access(mem,Read,addr,&data,sizeof(word_t));
+    calc_val.value.single_p = data;
+    calc_val.fsm_pred = MISS;
+    lookup(addr,inst,&pred_val_main,mem);
+    found = update(addr,inst,pred_val_main,calc_val,common_ref++);
+    if(found == MISS)
+    {
+      allocate(addr,inst,calc_val,common_ref++);
+      num_of_vpred_misses++;
+    }
+    else
+    {
+      num_of_vpred_hits++;
+    }
+  }
       /* check for DLite debugger entry condition */
       if (dlite_check_break(regs.regs_NPC,
 			    is_write ? ACCESS_WRITE : ACCESS_READ,

@@ -1,20 +1,20 @@
 #
 # SimpleScalar(TM) Tool Suite
 # Copyright (C) 1994-2003 by Todd M. Austin, Ph.D. and SimpleScalar, LLC.
-# All Rights Reserved.
-#
+# All Rights Reserved. 
+# 
 # THIS IS A LEGAL DOCUMENT, BY USING SIMPLESCALAR,
 # YOU ARE AGREEING TO THESE TERMS AND CONDITIONS.
-#
+# 
 # No portion of this work may be used by any commercial entity, or for any
 # commercial purpose, without the prior, written permission of SimpleScalar,
 # LLC (info@simplescalar.com). Nonprofit and noncommercial use is permitted
 # as described below.
-#
+# 
 # 1. SimpleScalar is provided AS IS, with no warranty of any kind, express
 # or implied. The user of the program accepts full responsibility for the
 # application of the program and the use of any results.
-#
+# 
 # 2. Nonprofit and noncommercial use is encouraged. SimpleScalar may be
 # downloaded, compiled, executed, copied, and modified solely for nonprofit,
 # educational, noncommercial research, and noncommercial scholarship
@@ -23,13 +23,13 @@
 # solely for nonprofit, educational, noncommercial research, and
 # noncommercial scholarship purposes provided that this notice in its
 # entirety accompanies all copies.
-#
+# 
 # 3. ALL COMMERCIAL USE, AND ALL USE BY FOR PROFIT ENTITIES, IS EXPRESSLY
 # PROHIBITED WITHOUT A LICENSE FROM SIMPLESCALAR, LLC (info@simplescalar.com).
-#
+# 
 # 4. No nonprofit user may place any restrictions on the use of this software,
 # including as modified by the user, by any other authorized user.
-#
+# 
 # 5. Noncommercial and nonprofit users may distribute copies of SimpleScalar
 # in compiled or executable form as set forth in Section 2, provided that
 # either: (A) it is accompanied by the corresponding machine-readable source
@@ -39,11 +39,11 @@
 # must permit verbatim duplication by anyone, or (C) it is distributed by
 # someone who received only the executable form, and is accompanied by a
 # copy of the written offer of source code.
-#
+# 
 # 6. SimpleScalar was developed by Todd M. Austin, Ph.D. The tool suite is
 # currently maintained by SimpleScalar LLC (info@simplescalar.com). US Mail:
 # 2395 Timbercrest Court, Ann Arbor, MI 48105.
-#
+# 
 # Copyright (C) 1994-2003 by Todd M. Austin, Ph.D. and SimpleScalar, LLC.
 #
 
@@ -281,21 +281,18 @@ SRCS =	main.c sim-fast.c sim-safe.c sim-cache.c sim-profile.c \
 	sim-eio.c sim-bpred.c sim-cheetah.c sim-outorder.c \
 	memory.c regs.c cache.c bpred.c ptrace.c eventq.c \
 	resource.c endian.c dlite.c symbol.c eval.c options.c range.c \
-	eio.c stats.c endian.c misc.c \
+	eio.c stats.c endian.c misc.c vp.c\
 	target-pisa/pisa.c target-pisa/loader.c target-pisa/syscall.c \
 	target-pisa/symbol.c \
 	target-alpha/alpha.c target-alpha/loader.c target-alpha/syscall.c \
-	target-alpha/symbol.c \
-	vp.c
-
+	target-alpha/symbol.c
 
 HDRS =	syscall.h memory.h regs.h sim.h loader.h cache.h bpred.h ptrace.h \
 	eventq.h resource.h endian.h dlite.h symbol.h eval.h bitmap.h \
-	eio.h range.h version.h endian.h misc.h \
+	eio.h range.h version.h endian.h misc.h vp.h\
 	target-pisa/pisa.h target-pisa/pisabig.h target-pisa/pisalittle.h \
 	target-pisa/pisa.def target-pisa/ecoff.h \
-	target-alpha/alpha.h target-alpha/alpha.def target-alpha/ecoff.h \
-	vp.h
+	target-alpha/alpha.h target-alpha/alpha.def target-alpha/ecoff.h
 
 #
 # common objects
@@ -475,7 +472,7 @@ main.$(OEXT): host.h misc.h machine.h machine.def endian.h version.h dlite.h
 main.$(OEXT): regs.h memory.h options.h stats.h eval.h loader.h sim.h
 sim-fast.$(OEXT): host.h misc.h machine.h machine.def regs.h memory.h
 sim-fast.$(OEXT): options.h stats.h eval.h loader.h syscall.h dlite.h sim.h
-sim-safe.$(OEXT): host.h misc.h machine.h machine.def regs.h memory.h
+sim-safe.$(OEXT): host.h misc.h machine.h machine.def regs.h memory.h vp.h
 sim-safe.$(OEXT): options.h stats.h eval.h loader.h syscall.h dlite.h sim.h
 sim-cache.$(OEXT): host.h misc.h machine.h machine.def regs.h memory.h
 sim-cache.$(OEXT): options.h stats.h eval.h cache.h loader.h syscall.h
@@ -543,4 +540,3 @@ syscall.$(OEXT): syscall.h
 symbol.$(OEXT): host.h misc.h loader.h machine.h machine.def regs.h memory.h
 symbol.$(OEXT): options.h stats.h eval.h symbol.h target-alpha/ecoff.h
 symbol.$(OEXT): target-alpha/alpha.h
-vp.$(OEXT): host.h misc.h stats.h eval.h

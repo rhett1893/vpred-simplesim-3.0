@@ -1,3 +1,23 @@
+ label_rtx emit_jump expand_label expand_goto expand_goto_internal expand_fixup fixup_gotos expand_asm expand_asm_operands expand_expr_stmt clear_last_expr expand_start_stmt_expr expand_end_stmt_expr expand_start_cond expand_end_cond expand_start_else expand_end_else expand_start_loop expand_start_loop_continue_elsewhere expand_loop_continue_here expand_end_loop expand_continue_loop expand_exit_loop expand_exit_loop_if_false expand_exit_something expand_null_return expand_null_return_1 expand_return drop_through_at_end_p tail_recursion_args expand_start_bindings use_variable use_variable_after expand_end_bindings expand_decl expand_decl_init expand_anon_union_decl expand_cleanups fixup_cleanups move_cleanups_up expand_start_case expand_start_case_dummy expand_end_case_dummy pushcase pushcase_range check_for_full_enumeration_handling expand_end_case do_jump_if_equal group_case_nodes balance_case_nodes node_has_low_bound node_has_high_bound node_is_bounded emit_jump_if_reachable emit_case_nodes get_frame_size assign_stack_local put_var_into_stack fixup_var_refs fixup_var_refs_insns fixup_var_refs_1 fixup_memory_subreg walk_fixup_memory_subreg fixup_stack_1 optimize_bit_field max_parm_reg_num get_first_nonparm_insn parm_stack_loc assign_parms get_structure_value_addr uninitialized_vars_warning setjmp_protect expand_function_start expand_function_end
+time in parse: 0.000000
+time in integration: 0.000000
+time in jump: 0.000000
+time in cse: 0.000000
+time in loop: 0.000000
+time in cse2: 0.000000
+time in flow: 0.000000
+time in combine: 0.000000
+time in sched: 0.000000
+time in local-alloc: 0.000000
+time in global-alloc: 0.000000
+time in sched2: 0.000000
+time in dbranch: 0.000000
+time in shorten-branch: 0.000000
+time in stack-reg: 0.000000
+time in final: 0.000000
+time in varconst: 0.000000
+time in symout: 0.000000
+time in dump: 0.000000
 sim-safe: SimpleScalar/Alpha Tool Set version 3.0 of August, 2003.
 Copyright (c) 1994-2003 by Todd M. Austin, Ph.D. and SimpleScalar, LLC.
 All Rights Reserved. This version of SimpleScalar is licensed for academic
@@ -6,9 +26,9 @@ entity, or for any commercial purpose, without the prior written permission
 of SimpleScalar, LLC (info@simplescalar.com).
 
 warning: section `.comment' ignored...
-sim: command line: ./sim-safe -redir:sim 1stmt.out anagram.alpha words -O 1stmt.i 
+sim: command line: ./sim-safe -redir:sim 1stmt.out cc1.alpha -O 1stmt.i 
 
-sim: simulation started @ Mon Sep 21 18:37:31 2020, options follow:
+sim: simulation started @ Mon Sep 21 20:32:25 2020, options follow:
 
 sim-safe: This simulator implements a functional simulator.  This
 functional simulator is the simplest, most user-friendly simulator in the
@@ -31,25 +51,26 @@ rather than speed.
 -max:inst                   0 # maximum number of inst's to execute
 
 sim: ** starting functional simulation **
+warning: partially supported sigaction() call...
 warning: partially supported sigprocmask() call...
 
 sim: ** simulation statistics **
-sim_num_insn                   4925 # total number of instructions executed
-sim_num_refs                   1832 # total number of loads and stores executed
-sim_elapsed_time                  1 # total simulation time in seconds
-sim_inst_rate             4925.0000 # simulation speed (in insts/sec)
+sim_num_insn              337341085 # total number of instructions executed
+sim_num_refs              121898431 # total number of loads and stores executed
+sim_elapsed_time                  8 # total simulation time in seconds
+sim_inst_rate          42167635.6250 # simulation speed (in insts/sec)
 ld_text_base           0x0120000000 # program text (code) segment base
-ld_text_size                 106496 # program text (code) size in bytes
+ld_text_size                1564672 # program text (code) size in bytes
 ld_data_base           0x0140000000 # program initialized data segment base
-ld_data_size                  71264 # program init'ed `.data' and uninit'ed `.bss' size in bytes
+ld_data_size                 277104 # program init'ed `.data' and uninit'ed `.bss' size in bytes
 ld_stack_base          0x011ff9b000 # program stack segment base (highest address in stack)
 ld_stack_size                 16384 # program initial stack size
-ld_prog_entry          0x01200059c0 # program entry point (initial PC)
+ld_prog_entry          0x0120025f70 # program entry point (initial PC)
 ld_environ_base        0x011ff97000 # program environment base address address
 ld_target_big_endian              0 # target executable endian-ness, non-zero if big endian
-mem.page_count                   19 # total number of pages allocated
-mem.page_mem                   152k # total size of memory pages allocated
-mem.ptab_misses                  29 # total first level page table misses
-mem.ptab_accesses            239380 # total page table accesses
-mem.ptab_miss_rate           0.0001 # first level page table miss rate
+mem.page_count                  655 # total number of pages allocated
+mem.page_mem                  5240k # total size of memory pages allocated
+mem.ptab_misses              869236 # total first level page table misses
+mem.ptab_accesses         922383944 # total page table accesses
+mem.ptab_miss_rate           0.0009 # first level page table miss rate
 
