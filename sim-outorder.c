@@ -2,20 +2,20 @@
 
 /* SimpleScalar(TM) Tool Suite
  * Copyright (C) 1994-2003 by Todd M. Austin, Ph.D. and SimpleScalar, LLC.
- * All Rights Reserved. 
- * 
+ * All Rights Reserved.
+ *
  * THIS IS A LEGAL DOCUMENT, BY USING SIMPLESCALAR,
  * YOU ARE AGREEING TO THESE TERMS AND CONDITIONS.
- * 
+ *
  * No portion of this work may be used by any commercial entity, or for any
  * commercial purpose, without the prior, written permission of SimpleScalar,
  * LLC (info@simplescalar.com). Nonprofit and noncommercial use is permitted
  * as described below.
- * 
+ *
  * 1. SimpleScalar is provided AS IS, with no warranty of any kind, express
  * or implied. The user of the program accepts full responsibility for the
  * application of the program and the use of any results.
- * 
+ *
  * 2. Nonprofit and noncommercial use is encouraged. SimpleScalar may be
  * downloaded, compiled, executed, copied, and modified solely for nonprofit,
  * educational, noncommercial research, and noncommercial scholarship
@@ -24,13 +24,13 @@
  * solely for nonprofit, educational, noncommercial research, and
  * noncommercial scholarship purposes provided that this notice in its
  * entirety accompanies all copies.
- * 
+ *
  * 3. ALL COMMERCIAL USE, AND ALL USE BY FOR PROFIT ENTITIES, IS EXPRESSLY
  * PROHIBITED WITHOUT A LICENSE FROM SIMPLESCALAR, LLC (info@simplescalar.com).
- * 
+ *
  * 4. No nonprofit user may place any restrictions on the use of this software,
  * including as modified by the user, by any other authorized user.
- * 
+ *
  * 5. Noncommercial and nonprofit users may distribute copies of SimpleScalar
  * in compiled or executable form as set forth in Section 2, provided that
  * either: (A) it is accompanied by the corresponding machine-readable source
@@ -40,11 +40,11 @@
  * must permit verbatim duplication by anyone, or (C) it is distributed by
  * someone who received only the executable form, and is accompanied by a
  * copy of the written offer of source code.
- * 
+ *
  * 6. SimpleScalar was developed by Todd M. Austin, Ph.D. The tool suite is
  * currently maintained by SimpleScalar LLC (info@simplescalar.com). US Mail:
  * 2395 Timbercrest Court, Ann Arbor, MI 48105.
- * 
+ *
  * Copyright (C) 1994-2003 by Todd M. Austin, Ph.D. and SimpleScalar, LLC.
  */
 
@@ -72,7 +72,9 @@
 #include "ptrace.h"
 #include "dlite.h"
 #include "sim.h"
-
+/*start-new*/
+#include "vp.h"
+/*end-new*/
 /*
  * This file implements a very detailed out-of-order issue superscalar
  * processor with a two-level memory system and speculative execution support.
@@ -330,6 +332,24 @@ static counter_t sim_total_branches = 0;
 /* cycle counter */
 static tick_t sim_cycle = 0;
 
+/*start-new*/
+static counter_t num_of_vpred_misses = 0;
+static counter_t num_of_vpred_hits = 0;
+extern counter_t predicted_ok;
+extern counter_t Wrong_Predictions;
+VAL_TAG_TYPE pred_val_main;
+extern int common_ref;
+extern int misses_vpred;
+extern int use_vp=1;
+extern int use_stride=1;
+extern int en_lookup_stride=0;
+extern int use_fsm = 0;
+extern int lookup_accessed;
+extern int update_accessed;
+extern int allocate_accessed;
+extern int found_value;
+/*end-new*/
+
 /* occupancy counters */
 static counter_t IFQ_count;		/* cumulative IFQ occupancy */
 static counter_t IFQ_fcount;		/* cumulative IFQ full count */
@@ -573,7 +593,7 @@ dtlb_access_fn(enum mem_cmd cmd,	/* access cmd, Read or Write */
 void
 sim_reg_options(struct opt_odb_t *odb)
 {
-  opt_reg_header(odb, 
+  opt_reg_header(odb,
 "sim-outorder: This simulator implements a very detailed out-of-order issue\n"
 "superscalar processor with a two-level memory system and speculative\n"
 "execution support.  This simulator is a performance simulator, tracking the\n"
@@ -1152,25 +1172,25 @@ sim_check_options(struct opt_odb_t *odb,        /* options database */
   if (res_ialu > MAX_INSTS_PER_CLASS)
     fatal("number of integer ALU's must be <= MAX_INSTS_PER_CLASS");
   fu_config[FU_IALU_INDEX].quantity = res_ialu;
-  
+
   if (res_imult < 1)
     fatal("number of integer multiplier/dividers must be greater than zero");
   if (res_imult > MAX_INSTS_PER_CLASS)
     fatal("number of integer mult/div's must be <= MAX_INSTS_PER_CLASS");
   fu_config[FU_IMULT_INDEX].quantity = res_imult;
-  
+
   if (res_memport < 1)
     fatal("number of memory system ports must be greater than zero");
   if (res_memport > MAX_INSTS_PER_CLASS)
     fatal("number of memory system ports must be <= MAX_INSTS_PER_CLASS");
   fu_config[FU_MEMPORT_INDEX].quantity = res_memport;
-  
+
   if (res_fpalu < 1)
     fatal("number of floating point ALU's must be greater than zero");
   if (res_fpalu > MAX_INSTS_PER_CLASS)
     fatal("number of floating point ALU's must be <= MAX_INSTS_PER_CLASS");
   fu_config[FU_FPALU_INDEX].quantity = res_fpalu;
-  
+
   if (res_fpmult < 1)
     fatal("number of floating point multiplier/dividers must be > zero");
   if (res_fpmult > MAX_INSTS_PER_CLASS)
@@ -1244,6 +1264,21 @@ sim_reg_stats(struct stat_sdb_t *sdb)   /* stats database */
   stat_reg_formula(sdb, "sim_IPB",
 		   "instruction per branch",
 		   "sim_num_insn / sim_num_branches", /* format */NULL);
+
+ /*start-new*/
+  stat_reg_int(sdb, "num_of_vpred_hits",
+         "num_of_vpred_hits",
+         &num_of_vpred_hits, 0, NULL);
+  stat_reg_int(sdb, "num_of_vpred_misses",
+         "num_of_vpred_misses",
+         &num_of_vpred_misses, 0, NULL);
+  stat_reg_int(sdb, "Correct_Prediction",
+        "total correct predictions made",
+        &predicted_ok, 0, NULL);
+  stat_reg_int(sdb, "Wrong_Predictions",
+       "Wrong_Predictions made by Value prediction",
+         &Wrong_Predictions, 0, NULL);
+ /*end-new*/
 
   /* occupancy stats */
   stat_reg_counter(sdb, "IFQ_count", "cumulative IFQ occupancy",
@@ -2213,7 +2248,7 @@ ruu_commit(void)
 	  /* invalidate load/store operation instance */
 	  LSQ[LSQ_head].tag++;
           sim_slip += (sim_cycle - LSQ[LSQ_head].slip);
-   
+
 	  /* indicate to pipeline trace that this instruction retired */
 	  ptrace_newstage(LSQ[LSQ_head].ptrace_seq, PST_COMMIT, events);
 	  ptrace_endinst(LSQ[LSQ_head].ptrace_seq);
@@ -2319,7 +2354,7 @@ ruu_recover(int branch_index)			/* index of mis-pred branch */
 	      /* blow away the consuming op list */
 	      LSQ[LSQ_index].odep_list[i] = NULL;
 	    }
-      
+
 	  /* squash this LSQ entry */
 	  LSQ[LSQ_index].tag++;
 
@@ -2339,7 +2374,7 @@ ruu_recover(int branch_index)			/* index of mis-pred branch */
 	  /* blow away the consuming op list */
 	  RUU[RUU_index].odep_list[i] = NULL;
 	}
-      
+
       /* squash this RUU entry */
       RUU[RUU_index].tag++;
 
@@ -2773,7 +2808,7 @@ ruu_issue(void)
 			  eventq_queue_event(rs, sim_cycle + fu->oplat);
 
 			  /* entered execute stage, indicate in pipe trace */
-			  ptrace_newstage(rs->ptrace_seq, PST_EXECUTE, 
+			  ptrace_newstage(rs->ptrace_seq, PST_EXECUTE,
 					  rs->ea_comp ? PEV_AGEN : 0);
 			}
 
@@ -2842,6 +2877,7 @@ ruu_issue(void)
          queue is always properly sorted */
       RSLINK_FREE(node);
     }
+
 }
 
 
@@ -3758,6 +3794,29 @@ ruu_dispatch(void)
       /* compute default next PC */
       regs.regs_NPC = regs.regs_PC + sizeof(md_inst_t);
 
+      /*start-new*/
+      if(is_PRED)
+      {
+        int data;
+        int found;
+        VAL_TAG_TYPE calc_val;
+        mem_access(mem,Read,addr,&data,sizeof(word_t));
+        calc_val.value.single_p = data;
+        calc_val.fsm_pred = MISS;
+        lookup(addr,inst,&pred_val_main,mem);
+        found = update(addr,inst,pred_val_main,calc_val,common_ref++);
+        if(found == MISS)
+        {
+          allocate(addr,inst,calc_val,common_ref++);
+          num_of_vpred_misses++;
+        }
+        else
+        {
+          num_of_vpred_hits++;
+        }
+      }
+      /*end-new*/
+
       /* drain RUU for TRAPs and system calls */
       if (MD_OP_FLAGS(op) & F_TRAP)
 	{
@@ -4132,6 +4191,7 @@ ruu_dispatch(void)
 			    addr, sim_num_insn, sim_cycle))
 	dlite_main(regs.regs_PC, /* no next PC */0, sim_cycle, &regs, mem);
     }
+
 }
 
 
@@ -4277,7 +4337,7 @@ ruu_fetch(void)
 
 	  /* pre-decode instruction, used for bpred stats recording */
 	  MD_SET_OPCODE(op, inst);
-	  
+
 	  /* get the next predicted fetch address; only use branch predictor
 	     result for branches (assumes pre-decode bits); NOTE: returned
 	     value may be 1 if bpred can only predict a direction */
@@ -4425,6 +4485,17 @@ simoo_mstate_obj(FILE *stream,			/* output stream */
 void
 sim_main(void)
 {
+  /*start-new*/
+  md_inst_t inst;
+  use_vp = 1;
+  use_stride = 0;
+  en_lookup_stride = 0;
+  use_fsm = 0;
+  register md_addr_t addr;
+  enum md_opcode op;
+  create_stride();
+  /*end-new*/
+
   /* ignore any floating point exceptions, they may occur on mis-speculated
      execution paths */
   signal(SIGFPE, SIG_IGN);
@@ -4555,7 +4626,9 @@ sim_main(void)
       /* service result completions, also readies dependent operations */
       /* ==> inserts operations into ready queue --> register deps resolved */
       ruu_writeback();
+      /*start-new*/
 
+      /*end-new*/
       if (!bugcompat_mode)
 	{
 	  /* try to locate memory operations that are ready to execute */

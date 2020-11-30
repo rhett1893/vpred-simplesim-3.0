@@ -145,77 +145,13 @@ int update(
          hash_table_i1[index][i].last_ref=my_ref;
          hash_table_i1[index][i].last_val=val[0]; /* update last value */
        }
-       /* else:
-	    there was already an update of a command that appears later
-	    in the code (sequentally) - stride, last_val, last_ref are not
-	    updated */
+
 
        if(flag[0]==1)
 	 return(HIT);
        else return(HITFAULT);
      }
-  //}
-  /*
-  Not Using Double Precision Calculations
-  */
- //  else if(SS_OP_FLAGS(op)&F_DOUBLE_P){
- //    /* double precision output */
- //     val[0]=calc_val.value.double_p[0];
- //     val[1]=calc_val.value.double_p[1];
- //     index=(unsigned int)(pc % hash_no_i2);
- //     for(i=0;i<hash_asso_i2;i++)
-	//    /* find inst in set */
-	// if((hash_table_i2[index][i].pc==pc)&&(hash_table_i2[index][i].valid)){
-	//    found=1;
-	//    break;
-	// }
- //     if(!found)                   /*miss*/
-	// return(MISS);
- //     else{
-	// for(j=0;j<2;j++)
- //         if(val[j]==pred_val.value.double_p[j]){
- //            /*hit*/
-	//       predicted_ok++; /* statistics */
-	//       flag[j]=1;
-	//       hash_table_i2[index][i].pred_correct[j]++; /* statistics */
-	//    }
 
- //        hash_table_i2[index][i].accessed++; /* statistics */
-
-	// if (hash_table_i2[index][i].x<1)
- // 	   panic("invalid X value (lookup stride)");
-
- //        if ((hash_table_i2[index][i].x>1)&&(pred_val.fsm_pred!=MISS))
-	//    hash_table_i2[index][i].x--;    /* update lookup X mechanism*/
-
- //        if (hash_table_i2[index][i].last_ref<my_ref){
-	//   /* update stride & last_val */
- //          hash_table_i2[index][i].stride[0]=
-	//     val[0] - hash_table_i2[index][i].last_val[0];
- //          hash_table_i2[index][i].last_val[0]=val[0];
- //          hash_table_i2[index][i].stride[1]=
-	//     val[1] - hash_table_i2[index][i].last_val[1];
- //          hash_table_i2[index][i].last_val[1]=val[1];
-
-	//   /* update last_ref */
-	//   hash_table_i2[index][i].last_ref = my_ref;
- //        }
-
-
-	//    /* update the classification fsm state */
- //        if((flag[0]==1)&&(flag[1]==1)){
-	//    if(hash_table_i2[index][i].ps<3)
-	//       hash_table_i2[index][i].ps++;
-	//    return(HIT);
-	// }
-	// else{ /* hit fault */
- //           if(hash_table_i2[index][i].ps>0)
-	//       hash_table_i2[index][i].ps--;
-	//    return(HITFAULT);
- //     	}
- //     }
- //  }
- // else return(MISS);
 }
 
 /* recover from a pipe flush - decrease the X value */
@@ -251,26 +187,7 @@ int lookup_undo(
 	   hash_table_i1[index][i].x--;
        return(HIT);
      }
- // }
- //  else if(SS_OP_FLAGS(op)&F_DOUBLE_P){
- //     index=(unsigned int)(pc % hash_no_i2);
- //     for(i=0;i<hash_asso_i2;i++)
-	// if((hash_table_i2[index][i].pc==pc)&&(hash_table_i2[index][i].valid)){
-	//    found=1;
-	//    break;
-	// }
- //     if(!found)                   /*miss*/
-	// return(MISS);
- //     else{
-	// if (hash_table_i2[index][i].x<1)
- // 	   panic("invalid X value (lookup stride)");
 
- //        if ((hash_table_i2[index][i].x>1)&&(pred_val.fsm_pred!=MISS))
-	//     hash_table_i2[index][i].x--;
-	// return(HIT);
- //     }
- //  }
-  //else return(MISS);
 }
 
 /* find a replacment candidate. Replacement policy:
@@ -298,20 +215,7 @@ char data_type /* single or double presicion */)
 			 }
 			 return(new_place);
 			 break;
-	  // case DOUBLE:
-	  //                /* init min_ref */
-			//  min_ref=hash_table_i2[index][0].last_ref;
-			//  new_place=0;
-			//  for(i=0;i<hash_asso_i2;i++){
-			// 	 if(hash_table_i2[index][i].valid == 0)
-			// 	 return(i);
-			// 	 else if(hash_table_i2[index][i].last_ref<min_ref){
-			// 	 min_ref=hash_table_i2[index][i].last_ref;
-			// 	 new_place=i;
-			// 	 }
-			//  }
-			//  return(new_place);
-			//  break;
+
           default :      panic("unknown data type\n");
       }
 }
@@ -347,25 +251,7 @@ unsigned int find_new_place_fsm(int index, char data_type)
 			 }
 			 return(new_place);
 			 break;
-	  // case DOUBLE:
-			//  min_ref=hash_table_i2[index][0].last_ref;
-			//  new_place=0;
-			//  for(i=0;i<hash_asso_i2;i++){
-			//      if(hash_table_i2[index][i].valid == 0)
-			// 	 return(i);
-			//      else if(hash_table_i2[index][i].ps<min_ps){
-			//          min_ps=hash_table_i2[index][i].ps;
-			// 	 min_ref=hash_table_i2[index][i].last_ref;
-			//          new_place=i;
-			//      }
-			//      else if((hash_table_i2[index][i].ps==min_ps)&&
-			// 	    (hash_table_i2[index][i].last_ref<min_ref)){
-			// 	 min_ref=hash_table_i2[index][i].last_ref;
-			// 	 new_place=i;
-			//      }
-			//  }
-			//  return(new_place);
-			//  break;
+
           default :      panic("unknown data type\n");
       }
 }
@@ -413,31 +299,6 @@ pc = (unsigned int)(pred_PC)>>INST_OFFSET;
    hash_table_i1[index][replace].last_alloc = (int) sim_cycle;
    hash_table_i1[index][replace].last_ref = (int) my_ref;
    hash_table_i1[index][replace].valid=1;
-//}
-// else if(SS_OP_FLAGS(op)&F_DOUBLE_P){
-//    val[0]=calc_val.value.double_p[0];
-//    val[1]=calc_val.value.double_p[1];
-//    index=(unsigned int)(pc % hash_no_i2);
-//    data_type=DOUBLE;
-
-//    /* find allocation entry */
-//    replace=(vp_replace ? find_new_place_lru(index,data_type)
-// 	               : find_new_place_fsm(index,data_type));
-
-//    /* update the entry fields */
-//    hash_table_i2[index][replace].pc = pc;
-//    hash_table_i2[index][replace].ps = start_fsm;
-//    hash_table_i2[index][replace].x = 1;
-//    hash_table_i2[index][replace].accessed = 1;
-//    hash_table_i2[index][replace].last_alloc = (int) sim_cycle;
-//    hash_table_i2[index][replace].last_ref = (int) my_ref;
-//    hash_table_i2[index][replace].valid = 1;
-//    for(j=0;j<2;j++){
-//       hash_table_i2[index][replace].last_val[j] = val[j];
-//       hash_table_i2[index][replace].stride[j] = 0;
-//       hash_table_i2[index][replace].pred_correct[j] = 0;
-//    }
-// }
 }
 /* lookup for inst in the VP table and return the predicted output values
     */
@@ -493,36 +354,5 @@ struct mem_t *mem  /* The memory block to be accessed for reading the value */ )
         pred_val->fsm_pred=(use_fsm?hash_table_i1[index][i].ps>>1:HIT);
         //update(pred_PC,inst,*pred_val,calc_val,common_ref++);
      }
-  //}
-  // else{
-  //    if(SS_OP_FLAGS(op)&F_DOUBLE_P){
-  //      /* double presicion */
-  //       index = (unsigned int)(pc % hash_no_i2);
-  //       /* find entry in the double precision table */
-  //       for(i=0;i<hash_asso_i2;i++)
-	 //   if((hash_table_i2[index][i].pc==pc)&&(hash_table_i2[index][i].valid)){
-	 //      found=1;
-	 //      break;
-  //  	   }
-  //       if(!found){                   /*miss*/
-  //          pred_val->fsm_pred=MISS;
-  //       }
-  //       else{
-  //          X=hash_table_i2[index][i].x;  /* set  the current lookuo X value */
-  //  	   hash_table_i2[index][i].x++; /* update X for future use */
 
-	 //     calculate and return predicted output value and flag
-  // 	   val[0]=((en_lookup_stride==0)?hash_table_i2[index][i].stride[0]:X*hash_table_i2[index][i].stride[0]);
-  // 	   val[1]=((en_lookup_stride==0)?hash_table_i2[index][i].stride[1]:X*hash_table_i2[index][i].stride[1]);
-  //          pred_val->value.double_p[0]=(hash_table_i2[index][i].last_val[0]+((use_stride==0)?0:val[0]));      /*hit*/
-  //          pred_val->value.double_p[1]=(hash_table_i2[index][i].last_val[1]+((use_stride==0)?0:val[1]));     /*hit*/
-  //          pred_val->fsm_pred=(use_fsm?hash_table_i2[index][i].ps>>1:HIT);
-  //       }
-  //    }
-  //    else return; /* value prediction for other instructions is not used*/
-
-  // /* NOTE: the F_SINGLE_P and F_DOUBLE_P flags should be added to the
-  //          instruction set code (ss.def) for all instructions that you
-	 //   want to be Value Predicted */
-  // }
 }

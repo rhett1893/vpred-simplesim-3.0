@@ -1,5 +1,5 @@
-#ifndef _stride_h_ 
-#define _stride_h_ 
+#ifndef _stride_h_
+#define _stride_h_
 
 #include "machine.h"
 #include "memory.h"
@@ -31,7 +31,7 @@ typedef struct ln_i1{
   int stride;           /* the stride between the two known last values */
   int last_alloc;       /* allocation sim_cycle time */
   int last_ref;         /* last lookup sim_cycle time */
-  char ps;              /* classification fsm present state: 
+  char ps;              /* classification fsm present state:
 			             0,1 - don't use prediction (don't go)
 			             1,2 - use prediction (go)           */
   char valid;           /* valid bit */
@@ -39,9 +39,9 @@ typedef struct ln_i1{
 			   when using X mechanism predicted value is not:
 			   last_val + stride, but: last_val + X*stride.
 			   X is incremented with every fetch (lookup) and
-			   decremented when the instruction leaves (either 
+			   decremented when the instruction leaves (either
 			   by normal terminition (update) or when instruction
-			   doesn't exit via commit, i.e. pipe is flushed 
+			   doesn't exit via commit, i.e. pipe is flushed
 			   (lookup_undo) */
   int accessed;
   int pred_correct;
@@ -74,7 +74,7 @@ typedef struct VAL_TAG_TYPE_t
 
 
 extern int                       en_lookup_stride;
-extern tick_t                    sim_cycle;
+// extern tick_t                    sim_cycle;
 extern int                       use_stride;
 extern int                       use_fsm;
 extern int                       use_trace_cache;
@@ -99,12 +99,3 @@ void allocate(md_addr_t pred_PC,md_inst_t inst,VAL_TAG_TYPE calc_val,int my_ref)
 void lookup(md_addr_t pred_PC,md_inst_t inst,VAL_TAG_TYPE *pred_val,struct mem_t *mem);
 
 #endif
-
-
-
-
-
-
-
-
-

@@ -92,6 +92,9 @@ VAL_TAG_TYPE pred_val_main;
 extern int common_ref;
 extern int misses_vpred;
 extern int use_vp=1;
+extern int use_stride=1;
+extern int en_lookup_stride=0;
+extern int use_fsm = 0;
 extern int lookup_accessed;
 extern int update_accessed;
 extern int allocate_accessed;
@@ -141,15 +144,15 @@ sim_reg_stats(struct stat_sdb_t *sdb)
   stat_reg_formula(sdb, "sim_inst_rate",
 		   "simulation speed (in insts/sec)",
 		   "sim_num_insn / sim_elapsed_time", NULL);
-  stat_reg_int(sdb, "Correct_Prediction",
-         "total correct predictions made",
-         &predicted_ok, 0, NULL);
   stat_reg_int(sdb, "num_of_vpred_hits",
          "num_of_vpred_hits",
          &num_of_vpred_hits, 0, NULL);
   stat_reg_int(sdb, "num_of_vpred_misses",
          "num_of_vpred_misses",
          &num_of_vpred_misses, 0, NULL);
+stat_reg_int(sdb, "Correct_Prediction",
+        "total correct predictions made",
+        &predicted_ok, 0, NULL);
   stat_reg_int(sdb, "Wrong_Predictions",
        "Wrong_Predictions made by Value prediction",
          &Wrong_Predictions, 0, NULL);
@@ -291,6 +294,9 @@ void
 sim_main(void)
 {
   use_vp = 1;
+  use_stride = 0;
+  en_lookup_stride = 0;
+  use_fsm = 0;
   register md_addr_t addr;
   enum md_opcode op;
   register int is_write;
