@@ -90,7 +90,7 @@ extern int                       hash_asso_i2;
 
 void create_stride();
 
-int update(md_addr_t instpc,md_inst_t inst,VAL_TAG_TYPE pred_val,VAL_TAG_TYPE calc_val, int my_ref);
+int update(md_addr_t instpc,md_inst_t inst,VAL_TAG_TYPE pred_val,VAL_TAG_TYPE calc_val,struct mem_t *mem, int my_ref);
 
 int lookup_undo(md_addr_t instpc, md_inst_t inst, VAL_TAG_TYPE pred_val);
 
