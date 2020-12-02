@@ -78,6 +78,7 @@ int update(
  md_inst_t inst,   /* The instruction opcode and registers */
  VAL_TAG_TYPE pred_val, /* The given (by lookup) predicted value and flags */
  VAL_TAG_TYPE calc_val, /* The actual (calc) value and flags */
+ struct mem_t *mem ,
  int my_ref             /* The Time of the update */  )
 {
   update_accessed++;
@@ -88,7 +89,7 @@ int update(
   char flag[2];        /* single/double precision correct prediction flags */
   char found=0;        /* inst "found" status */
   enum md_opcode op;   /* decoded opcode enum */
-
+  int found1;
   if(&use_vp==0) /* check if using VP */
      return(MISS);
   pc = (unsigned int)(instpc>>INST_OFFSET);
@@ -119,7 +120,20 @@ int update(
 	 }
          else{ /* hit fault: found, but wrong prediction was given */
 	   /* update the classification fsm state */
-	 	Wrong_Predictions++;
+        	 	if(use_stride != 1 && en_lookup_stride != 1)
+            { 
+                en_lookup_stride = 1;
+                use_stride = 1;
+                lookup(instpc,inst,&pred_val,mem);
+                found1 = update(instpc,inst,pred_val,calc_val,mem,common_ref);
+                use_stride =0;
+                en_lookup_stride = 0;
+            }
+            else
+            {
+              Wrong_Predictions++;
+              lookup_undo(instpc,inst,pred_val);
+            }
 	    if(hash_table_i1[index][i].ps>0)
 	      hash_table_i1[index][i].ps--;
 

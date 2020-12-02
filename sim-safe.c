@@ -382,7 +382,7 @@ sim_main(void)
     calc_val.value.single_p = data;
     calc_val.fsm_pred = MISS;
     lookup(addr,inst,&pred_val_main,mem);
-    found = update(addr,inst,pred_val_main,calc_val,common_ref++);
+    found = update(addr,inst,pred_val_main,calc_val,mem,common_ref++);
     if(found == MISS)
     {
       allocate(addr,inst,calc_val,common_ref++);
