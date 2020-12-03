@@ -21,9 +21,7 @@
 /* pc stride (in bits) */
 #define INST_OFFSET	0
 
-#define is_PRED   ( ((MD_OP_FLAGS(op) & F_ICOMP) ||   \
-                         (MD_OP_FLAGS(op) & F_LOAD))  &&  \
-                         !(MD_OP_FLAGS(op) & F_LONGLAT) )
+#define is_PRED   ((MD_OP_FLAGS(op) & F_LOAD))
 /* Single precision table entry definition */
 typedef struct ln_i1{
   unsigned long	pc;     /* entry PC (tag) */
